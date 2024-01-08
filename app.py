@@ -202,16 +202,16 @@ if uploaded_file is not None:
         modelo(df)
         # st.text("Data")
 
-        """
-
-                        **MAE (Mean Absolute Error)**: Representa a média das diferenças absolutas entre as previsões e os valores reais. Indica o quão perto as previsões estão dos valores reais, sem considerar a direção do erro.
-
-                        **MSE (Mean Squared Error)**: É a média das diferenças quadradas entre as previsões e os valores reais. Penaliza erros maiores mais significativamente que o MAE, devido ao termo quadrático, o que torna o MSE mais sensível a outliers.
-
-                        **RMSE (Root Mean Squared Error)**: É a raiz quadrada do MSE. Apresenta o mesmo tipo de informação que o MSE, mas na mesma unidade que os dados originais, o que facilita a interpretação
-                        
-
-                        """
+        st.markdown(
+            """
+            <div style="border: 2px solid black; border-radius: 5px; padding: 10px;">
+                <p><strong>MAE (Mean Absolute Error)</strong>: Representa a média das diferenças absolutas entre as previsões e os valores reais. Indica o quão perto as previsões estão dos valores reais, sem considerar a direção do erro.</p>
+                <p><strong>MSE (Mean Squared Error)</strong>: É a média das diferenças quadradas entre as previsões e os valores reais. Penaliza erros maiores mais significativamente que o MAE, devido ao termo quadrático, o que torna o MSE mais sensível a outliers.</p>
+                <p><strong>RMSE (Root Mean Squared Error)</strong>: É a raiz quadrada do MSE. Apresenta o mesmo tipo de informação que o MSE, mas na mesma unidade que os dados originais, o que facilita a interpretação.</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
 
         """
         ### Passo 3: Previsão no Intervalo 01/01/2024 a 31/01/2024
