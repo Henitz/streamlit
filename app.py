@@ -10,6 +10,7 @@ import pandas as pd
 # from statsmodels.tsa.seasonal import seasonal_decompose
 # from statsmodels.tsa.stattools import acf, pacf
 import streamlit as st
+from prophet.diagnostics import performance_metrics
 
 # Ignorar os FutureWarnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -60,6 +61,9 @@ def modelo(df1):
     ax.plot(history_ds, m.history['y'], 'k.', label='Histórico')
     ax.plot(fcst_t, forecast['yhat'], label='Previsão')
 
+    # Plotar a faixa de intervalo
+    ax.fill_between(fcst_t, forecast['yhat_lower'], forecast['yhat_upper'], color='red', alpha=0.2)
+
     # Personalizando o gráfico
     ax.set_xlabel('Data')
     ax.set_ylabel('Valores')
@@ -69,7 +73,7 @@ def modelo(df1):
 
     # Calculando métricas de desempenho
     # df_cv = performance_metrics(df)
-    # print(df_cv.head())
+    # st.write(df_cv)
     # este procedimento está dando erro
 
     from sklearn.metrics import mean_absolute_error, mean_squared_error
@@ -151,28 +155,8 @@ def prevendo(df2, data1):
     else:
         return None
 
-    # Converter a coluna 'ds' para formato de data, se ainda não estiver em formato de data
-    # df1['ds'] = pd.to_datetime(df1['ds'])
 
-    # fig, ax = plt.subplots(figsize=(16, 8))
-
-    # fcst_t = np.array(fcst['ds'].dt.to_pydatetime())
-    # ax.plot(np.array(m.history['ds'].dt.to_pydatetime()), m.history['y'], 'k.')
-
-    # ax.plot(df1['ds'], df1['y'])
-
-    # ax.set_title('Preço de Fechamento ao Longo do Tempo')
-    # ax.set_xlabel('Data')
-    # ax.set_ylabel('Preço de Fechamento')
-
-    # Configurar o formato do eixo x para exibir apenas o ano
-
-    # ax.xaxis.set_major_formatter(mdates.DateFormatter('%Y'))
-    # ax.xaxis.set_major_locator(mdates.YearLocator())
-    # fig.autofmt_xdate()  # Rotacionar os anos para melhor visualização
-
-    # Mostrar o gráfico no Streamlit
-    # st.pyplot(fig)
+# Converter a coluna 'ds' para formato de data, se ainda não estiver em formato de data
 
 
 st.title('📈 Projeção do Índice Bovespa')
@@ -183,7 +167,7 @@ Você poderá visualizar as projeções do índice Bovespa para o período de 01
 
 Created by Henrique José Itzcovici
 
-Code available here: https://github.com/henitz/streamlit_bovespa
+Code available here: https://github.com/henitz/streamlit
 """
 
 """
@@ -211,8 +195,28 @@ if uploaded_file is not None:
         # Remover as colunas especificadas do DataFrame
         df = df.drop(columns=colunas_para_remover)
         st.text(df)
+        """
+        ### Passo 2: Modelo
+        """
+
         modelo(df)
-        st.text("Data")
+        # st.text("Data")
+
+        """
+
+                        **MAE (Mean Absolute Error)**: Representa a média das diferenças absolutas entre as previsões e os valores reais. Indica o quão perto as previsões estão dos valores reais, sem considerar a direção do erro.
+
+                        **MSE (Mean Squared Error)**: É a média das diferenças quadradas entre as previsões e os valores reais. Penaliza erros maiores mais significativamente que o MAE, devido ao termo quadrático, o que torna o MSE mais sensível a outliers.
+
+                        **RMSE (Root Mean Squared Error)**: É a raiz quadrada do MSE. Apresenta o mesmo tipo de informação que o MSE, mas na mesma unidade que os dados originais, o que facilita a interpretação
+                        
+
+                        """
+
+        """
+        ### Passo 3: Previsão no Intervalo 01/01/2024 a 31/01/2024
+        """
+
         flag = False
         data = st.slider('Data', 1, 31, 1)
         if data <= 9:
@@ -220,7 +224,7 @@ if uploaded_file is not None:
         else:
             data2 = '2024-01-' + str(data)
 
-        btn = st.button("predict")
+        btn = st.button("Previsão")
 
         if btn:
             x = prevendo(df, data2)
@@ -231,4 +235,3 @@ if uploaded_file is not None:
                 st.write(f"Valor previsto para {data2}: {rounded_x}")
         flag = True
         prevendo(df, data)
-
