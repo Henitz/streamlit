@@ -258,7 +258,7 @@ if uploaded_file is not None:
             if x is None:
                 st.write(f"A data {data2} não está disponível nas previsões ou é feriado/final de semana.")
             else:
-                rounded_x = round(x, 2)
+                rounded_x = round(x, 3)
                 st.write(f"Valor previsto para {data2}: {rounded_x}")
         flag = True
         prevendo(df, data)
