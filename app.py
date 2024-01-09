@@ -15,6 +15,9 @@ from prophet.diagnostics import performance_metrics
 # Ignorar os FutureWarnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
 
+selected_date = '2024-01-25'  # Replace this with the selected date
+selected_time = pd.Timestamp('00:00:00').time()
+
 
 def modelo(df1):
     import pandas as pd
@@ -122,6 +125,19 @@ def modelo(df1):
     rmse_rounded = round(rmse)
     st.write(f'MSE: {mse_rounded}')
     st.write(f'RMSE: {rmse_rounded}')
+
+    if data_selecionada is not None and hora_selecionada is not None:
+        # Convert the selected date to the DataFrame's format
+        data_formatada_interna = pd.to_datetime(data_selecionada).strftime('%Y-%m-%d')
+
+        # Create a datetime combining the selected date with the default time
+        data_hora_interna = pd.to_datetime(data_formatada_interna + ' ' + str(hora_selecionada))
+
+        # Filter the DataFrame based on the selected date and time
+        df_filtrado_interno = forecast[forecast['ds'] == data_hora_interna]
+        st.dataframe(df_filtrado_interno)
+    else:
+        st.warning("Não há dados para a data selecionada.")
 
 
 def prevendo(df2, data1):
