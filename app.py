@@ -195,7 +195,7 @@ if uploaded_file is not None:
         # Remover as colunas especificadas do DataFrame
         df = df.drop(columns=colunas_para_remover)
 
-        st.dataframe(df)
+        st.dataframe(df.style.set_table_attributes('style="height: 50px; overflow: auto;"'))
 
         if 'ds' in df.columns:
             data_padrao = df['ds'].min()
@@ -227,7 +227,6 @@ if uploaded_file is not None:
         """
 
         modelo(df)
-        # st.text("Data")
 
         st.markdown(
             """
