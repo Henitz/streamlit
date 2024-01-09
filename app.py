@@ -18,12 +18,11 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 def modelo(df1):
     import pandas as pd
+    import numpy as np
     from prophet import Prophet
-
-    # Suponha que você tenha um DataFrame 'df' com as colunas 'ds' (datas) e 'y' (valores)
-    # ...
-
-    # m = Prophet()
+    import plotly.graph_objs as go
+    import plotly.express as px
+    import streamlit as st
 
     # Adicionando feriados nacionais brasileiros
     feriados_sp = pd.DataFrame({
@@ -42,7 +41,7 @@ def modelo(df1):
     df1['ds'] = pd.to_datetime(df1['ds'])
 
     # Adicionando feriados semanais (sábados e domingos)
-    # Cria campo is_weekend com 0 e 1 - significando fim de semana
+    # Criar campo 'is_weekend' com 0 e 1 - significando fim de semana
     df1['is_weekend'] = (df1['ds'].dt.weekday >= 5).astype(int)
     m.add_regressor('is_weekend')
 
@@ -57,18 +56,35 @@ def modelo(df1):
     fcst_t = np.array(forecast['ds'].dt.to_pydatetime())
     history_ds = np.array(m.history['ds'].dt.to_pydatetime())
 
-    fig, ax = plt.subplots()
-    ax.plot(history_ds, m.history['y'], 'k.', label='Histórico')
-    ax.plot(fcst_t, forecast['yhat'], label='Previsão')
+    # Criando o gráfico com Plotly
+    fig = go.Figure()
 
-    # Plotar a faixa de intervalo
-    ax.fill_between(fcst_t, forecast['yhat_lower'], forecast['yhat_upper'], color='red', alpha=0.2)
+    # Adicionando os dados do histórico
+    fig.add_trace(go.Scatter(x=history_ds, y=m.history['y'], mode='markers', name='Histórico'))
 
-    # Personalizando o gráfico
-    ax.set_xlabel('Data')
-    ax.set_ylabel('Valores')
-    ax.legend()
-    st.pyplot(fig)
+    # Adicionando os dados da previsão
+    fig.add_trace(go.Scatter(x=fcst_t, y=forecast['yhat'], mode='lines', name='Previsão'))
+
+    # Adicionando a faixa de intervalo
+    fig.add_trace(go.Scatter(
+        x=np.concatenate([fcst_t, fcst_t[::-1]]),
+        y=np.concatenate([forecast['yhat_lower'], forecast['yhat_upper'][::-1]]),
+        fill='toself',
+        fillcolor='rgba(255, 0, 0, 0.2)',
+        line=dict(color='rgba(255, 255, 255, 0)'),
+        name='Intervalo de Confiança'
+    ))
+
+    # Personalizando o layout do gráfico
+    fig.update_layout(
+        xaxis_title='Data',
+        yaxis_title='Valores',
+        title='Previsão com Prophet e Intervalo de Confiança'
+    )
+
+    # Exibindo o gráfico no Streamlit
+    st.plotly_chart(fig)
+
     # Mostrando
 
     # Calculando métricas de desempenho
