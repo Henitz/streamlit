@@ -181,9 +181,9 @@ st.title('📈 Projeção do Índice Bovespa')
 Este data app usa a Biblioteca open-source Prophet para automaticamente gerar valores futuros de previsão de um dataset importado
 Você poderá visualizar as projeções do índice Bovespa para o período de 01/01/2024 a 31/01/2024 😵
 
-Created by Henrique José Itzcovici
+criado por Henrique José Itzcovici
 
-Code available here: https://github.com/henitz/streamlit
+Código avaliável em: https://github.com/henitz/streamlit
 """
 
 """
