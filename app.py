@@ -194,7 +194,34 @@ if uploaded_file is not None:
 
         # Remover as colunas especificadas do DataFrame
         df = df.drop(columns=colunas_para_remover)
-        st.text(df)
+
+        st.dataframe(df)
+
+        if 'ds' in df.columns:
+            data_padrao = df['ds'].min()
+            hora_padrao = pd.Timestamp('00:00:00').time()  # Hora padrão como 00:00:00
+            data_minima = df['ds'].min()  # Data mínima do DataFrame
+            data_maxima = df['ds'].max()  # Data máxima do DataFrame
+
+            data_selecionada = st.sidebar.date_input("Selecione uma data", value=data_padrao, min_value=data_minima,
+                                                     max_value=data_maxima)
+            hora_selecionada = st.sidebar.time_input("Selecione um horário", value=hora_padrao)
+
+            if data_selecionada:
+                # Convertendo a data selecionada para o formato do DataFrame
+                data_selecionada_formatada = pd.to_datetime(data_selecionada).strftime('%Y-%m-%d')
+
+                # Criar um datetime combinando a data selecionada com a hora padrão
+                data_hora_selecionada = pd.to_datetime(data_selecionada_formatada + ' ' + str(hora_selecionada))
+
+                # Filtrar o DataFrame com base na data e hora selecionadas
+                df_filtrado = df[df['ds'] == data_hora_selecionada]
+                st.dataframe(df_filtrado)
+            else:
+                st.warning("Não há dados para a data selecionada.")
+        else:
+            st.warning("A coluna 'ds' não está presente no DataFrame.")
+
         """
         ### Passo 2: Modelo
         """
