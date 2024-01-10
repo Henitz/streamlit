@@ -33,14 +33,40 @@ import streamlit as st
 
 st.title('📈 Projeção do Índice Bovespa')
 
-"""
-Este data app usa a Biblioteca open-source Prophet para automaticamente gerar valores futuros de previsão de um dataset importado
-Você poderá visualizar as projeções do índice Bovespa para o período de 01/01/2024 a 31/01/2024 😵
+st.markdown(
+        """
+<div style="border: 2px solid black; border-radius: 5px; padding: 10px; text-align: justify;">
+    <p>
+        Este data app usa a Biblioteca open-source Prophet para automaticamente gerar valores futuros de previsão de um dataset importado. Você poderá visualizar as projeções do índice Bovespa para o período de 01/01/2024 a 31/01/2024 😵.
+    </p>
+    <p>
+        A biblioteca Prophet, desenvolvida pelo Facebook, é uma ferramenta popular e poderosa para previsão de séries temporais. Ela foi projetada para simplificar o processo de criação de modelos de previsão, oferecendo aos usuários uma maneira fácil de gerar previsões precisas e de alta qualidade, mesmo sem um profundo conhecimento em séries temporais ou estatística avançada.
+    </p>
+    <p>
+        Aqui estão alguns pontos-chave sobre o Prophet:
+    </p>
+    <ol>
+        <li>Facilidade de Uso: O Prophet foi desenvolvido para ser acessível e fácil de usar, permitindo que usuários, mesmo sem experiência avançada em séries temporais, possam construir modelos de previsão.</li>
+        <li>Componentes Aditivos: O modelo do Prophet é baseado em componentes aditivos, onde são consideradas tendências anuais, sazonais e efeitos de feriados, além de componentes de regressão.</li>
+        <li>Tratamento de Dados Ausentes e Outliers: O Prophet lida bem com dados ausentes e outliers, reduzindo a necessidade de pré-processamento extensivo dos dados antes da modelagem.</li>
+        <li>Flexibilidade: Permite a inclusão de dados adicionais, como feriados e eventos especiais, para melhorar a precisão das previsões.</li>
+        <li>Estimativa Automática de Intervalos de Incerteza: O Prophet fornece intervalos de incerteza para as previsões, o que é essencial para compreender a confiabilidade dos resultados.</li>
+        <li>Implementação em Python e R: Está disponível tanto para Python quanto para R, ampliando sua acessibilidade para diferentes comunidades de usuários.</li>
+        <li>Comunidade Ativa e Documentação Detalhada: A biblioteca possui uma comunidade ativa de usuários e desenvolvedores, além de uma documentação detalhada e exemplos práticos que ajudam na aprendizagem e na solução de problemas.</li>
+    </ol>
+    <p>
+        O Prophet tem sido amplamente utilizado em diversas áreas, como previsão de vendas, demanda de produtos, análise financeira, previsão climática e muito mais, devido à sua capacidade de gerar previsões precisas e à sua facilidade de uso. É importante notar que, embora seja uma ferramenta poderosa, a escolha entre modelos depende do contexto específico do problema e da natureza dos dados.
+    </p>
+    <p>
+        Criado por Henrique José Itzcovici.
+        Código disponível em: <a href="https://github.com/Henitz/streamlit">https://github.com/Henitz/streamlit</a>
+    </p>
+</div>
 
-criado por Henrique José Itzcovici
 
-Código avaliável em: https://github.com/Henitz/streamlit
-"""
+        """,
+        unsafe_allow_html=True
+    )
 
 """
 ### Passo 1: Importar dados
@@ -160,6 +186,28 @@ if uploaded_file is not None and not df.empty and 'ds' in df.columns:
     <p>Um RMSE de 11,65 indicaria que, em média, as previsões estão a cerca de 11,65 unidades de distância dos valores reais. Para muitos investidores e analistas financeiros, essa margem de erro pode ser considerada grande, especialmente ao lidar com investimentos de curto prazo ou estratégias de trading onde a precisão é crucial.</p>
     <p>Portanto, para previsões na bolsa de valores, é comum buscar valores de erro menores, indicando uma maior precisão nas previsões. Um RMSE de 11,65 pode ser visto como relativamente alto, sugerindo a necessidade de melhorias no modelo para tornar as previsões mais precisas e confiáveis.</p>
 </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+    st.markdown(
+        """
+    <div style="border: 2px solid black; border-radius: 5px; padding: 10px; text-align: justify;">
+    <h6><strong>Acurácia</strong></h6>
+    <p>
+        Em modelos de séries temporais, o conceito de "acurácia" não é tão direto quanto em modelos de classificação, onde se pode calcular a precisão de forma direta. A acurácia em modelos de séries temporais pode ser interpretada de maneira diferente, pois envolve a capacidade do modelo de fazer previsões precisas sobre pontos futuros desconhecidos.
+    </p>
+    <p>
+        Em vez de usar termos como "acurácia", normalmente são utilizadas métricas específicas, como as mencionadas anteriormente (MAE, RMSE, MAPE, entre outras), para descrever o quão próximas as previsões do modelo estão dos valores reais.
+    </p>
+    <p>
+        Então, dizer que um modelo de série temporal tem uma precisão de 70% pode não ser a maneira mais comum de descrever seu desempenho. Em vez disso, seria mais informativo dizer algo como "o modelo tem um RMSE de 10", o que indica uma certa magnitude média de erro entre as previsões e os valores reais, ou "o modelo tem um MAPE de 5%", o que mostra a média dos erros percentuais das previsões.
+    </p>
+    <p>
+        Traduzir a performance de um modelo de séries temporais em uma única medida de "acurácia" pode não capturar completamente sua eficácia, já que esses modelos são geralmente avaliados por meio de várias métricas, cada uma fornecendo uma perspectiva diferente do desempenho do modelo.
+    </p>
+</div>
+
         """,
         unsafe_allow_html=True
     )
