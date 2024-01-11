@@ -12,7 +12,7 @@ import pandas as pd
 import streamlit as st
 from prophet.diagnostics import performance_metrics
 
-import Model
+import model
 import prevel_model
 
 # Ignorar os FutureWarnings
@@ -21,7 +21,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 # selected_date = '2024-01-25'  # Replace this with the selected date
 # selected_time = pd.Timestamp('00:00:00').time()
 
-from Model import modelo
+from model import modelo
 from prevel_model import prevendo
 
 import pandas as pd
@@ -159,7 +159,7 @@ if uploaded_file is not None and not df.empty and 'ds' in df.columns:
     """
     ### Passo 2: Modelo
     """
-    Model.modelo(df, data_selecionada, hora_selecionada)
+    model.modelo(df, data_selecionada, hora_selecionada)
     st.markdown(
         """
         <style>
