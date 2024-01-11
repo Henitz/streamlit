@@ -159,7 +159,7 @@ if uploaded_file is not None and not df.empty and 'ds' in df.columns:
     """
     ### Passo 2: Modelo
     """
-
+    Model.modelo(df, data_selecionada, hora_selecionada)
     st.markdown(
         """
         <style>
