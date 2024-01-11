@@ -33,40 +33,76 @@ import streamlit as st
 
 st.title('📈 Projeção do Índice Bovespa')
 
+# Importando bibliotecas
+import streamlit as st
+
+# Estilo para ajustar a largura da área de exibição e justificar o texto
 st.markdown(
-        """
-<div style="border: 2px solid black; border-radius: 5px; padding: 10px; text-align: justify;">
-    <p>
-        Este data app usa a Biblioteca open-source Prophet para automaticamente gerar valores futuros de previsão de um dataset importado. Você poderá visualizar as projeções do índice Bovespa para o período de 01/01/2024 a 31/01/2024 😵.
-    </p>
-    <p>
-        A biblioteca Prophet, desenvolvida pelo Facebook, é uma ferramenta popular e poderosa para previsão de séries temporais. Ela foi projetada para simplificar o processo de criação de modelos de previsão, oferecendo aos usuários uma maneira fácil de gerar previsões precisas e de alta qualidade, mesmo sem um profundo conhecimento em séries temporais ou estatística avançada.
-    </p>
-    <p>
+    """
+    <style>
+        .reportview-container .main .block-container {
+            max-width: 50%;
+            justify-content: center;
+        }
+
+        .custom-container {
+            width: 400px; /* Largura fixa */
+            padding: 20px;
+            border: 2px solid #333; /* Borda mais escura */
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Definindo guias
+tabs = ["Visão Geral", "Pontos-chave", "Utilização do Prophet", "Sobre o Autor"]
+selected_tab = st.sidebar.radio("Escolha uma guia:", tabs)
+
+# Conteúdo das guias
+tab_contents = {
+    "Visão Geral": """
+    <div class="custom-container">
+        Este data app usa a Biblioteca open-source Prophet para automaticamente gerar valores futuros de previsão de um dataset importado. 
+        Você poderá visualizar as projeções do índice Bovespa para o período de 01/01/2024 a 31/01/2024 😵.
+    </div>
+    """,
+    "Pontos-chave": """
+    <div class="custom-container">
+        A biblioteca Prophet, desenvolvida pelo Facebook, é uma ferramenta popular e poderosa para previsão de séries temporais. 
+        Ela foi projetada para simplificar o processo de criação de modelos de previsão, oferecendo aos usuários uma maneira fácil de gerar previsões precisas e de alta qualidade, mesmo sem um profundo conhecimento em séries temporais ou estatística avançada.
+
         Aqui estão alguns pontos-chave sobre o Prophet:
-    </p>
-    <ol>
-        <li>Facilidade de Uso: O Prophet foi desenvolvido para ser acessível e fácil de usar, permitindo que usuários, mesmo sem experiência avançada em séries temporais, possam construir modelos de previsão.</li>
-        <li>Componentes Aditivos: O modelo do Prophet é baseado em componentes aditivos, onde são consideradas tendências anuais, sazonais e efeitos de feriados, além de componentes de regressão.</li>
-        <li>Tratamento de Dados Ausentes e Outliers: O Prophet lida bem com dados ausentes e outliers, reduzindo a necessidade de pré-processamento extensivo dos dados antes da modelagem.</li>
-        <li>Flexibilidade: Permite a inclusão de dados adicionais, como feriados e eventos especiais, para melhorar a precisão das previsões.</li>
-        <li>Estimativa Automática de Intervalos de Incerteza: O Prophet fornece intervalos de incerteza para as previsões, o que é essencial para compreender a confiabilidade dos resultados.</li>
-        <li>Implementação em Python e R: Está disponível tanto para Python quanto para R, ampliando sua acessibilidade para diferentes comunidades de usuários.</li>
-        <li>Comunidade Ativa e Documentação Detalhada: A biblioteca possui uma comunidade ativa de usuários e desenvolvedores, além de uma documentação detalhada e exemplos práticos que ajudam na aprendizagem e na solução de problemas.</li>
-    </ol>
-    <p>
-        O Prophet tem sido amplamente utilizado em diversas áreas, como previsão de vendas, demanda de produtos, análise financeira, previsão climática e muito mais, devido à sua capacidade de gerar previsões precisas e à sua facilidade de uso. É importante notar que, embora seja uma ferramenta poderosa, a escolha entre modelos depende do contexto específico do problema e da natureza dos dados.
-    </p>
-    <p>
+
+        <ol>
+            <li>Facilidade de Uso: O Prophet foi desenvolvido para ser acessível e fácil de usar, permitindo que usuários, mesmo sem experiência avançada em séries temporais, possam construir modelos de previsão.</li>
+            <li>Componentes Aditivos: O modelo do Prophet é baseado em componentes aditivos, onde são consideradas tendências anuais, sazonais e efeitos de feriados, além de componentes de regressão.</li>
+            <li>Tratamento de Dados Ausentes e Outliers: O Prophet lida bem com dados ausentes e outliers, reduzindo a necessidade de pré-processamento extensivo dos dados antes da modelagem.</li>
+            <li>Flexibilidade: Permite a inclusão de dados adicionais, como feriados e eventos especiais, para melhorar a precisão das previsões.</li>
+            <li>Estimativa Automática de Intervalos de Incerteza: O Prophet fornece intervalos de incerteza para as previsões, o que é essencial para compreender a confiabilidade dos resultados.</li>
+            <li>Implementação em Python e R: Está disponível tanto para Python quanto para R, ampliando sua acessibilidade para diferentes comunidades de usuários.</li>
+            <li>Comunidade Ativa e Documentação Detalhada: A biblioteca possui uma comunidade ativa de usuários e desenvolvedores, além de uma documentação detalhada e exemplos práticos que ajudam na aprendizagem e na solução de problemas.</li>
+        </ol>
+    </div>
+    """,
+    "Utilização do Prophet": """
+    <div class="custom-container">
+        O Prophet tem sido amplamente utilizado em diversas áreas, como previsão de vendas, demanda de produtos, análise financeira, previsão climática e muito mais, devido à sua capacidade de gerar previsões precisas e à sua facilidade de uso. 
+        É importante notar que, embora seja uma ferramenta poderosa, a escolha entre modelos depende do contexto específico do problema e da natureza dos dados.
+    </div>
+    """,
+    "Sobre o Autor": """
+    <div class="custom-container">
         Criado por Henrique José Itzcovici.
-        Código disponível em: <a href="https://github.com/Henitz/streamlit">https://github.com/Henitz/streamlit</a>
-    </p>
-</div>
+        Código disponível em: <a href="https://github.com/Henitz/streamlit" target="_blank">GitHub</a>
+    </div>
+    """
+}
 
-
-        """,
-        unsafe_allow_html=True
-    )
+# Exibindo o conteúdo da guia selecionada
+st.markdown(tab_contents[selected_tab], unsafe_allow_html=True)
 
 """
 ### Passo 1: Importar dados
